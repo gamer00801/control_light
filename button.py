@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 import requests
-esp32_ip='172.16.0.246'# Flask Application Code
+esp32_ip='172.16.0.246' # 請根據ESP32端的IP來填寫
 app = Flask(__name__)
 
 @app.route('/')
