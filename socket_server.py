@@ -1,12 +1,27 @@
 import socket
-from model1 import *
 from machine import I2S, Pin
+import network
+import time
 
+def wifi_connect(SSID, PASSWORD):
+    station = network.WLAN(network.STA_IF)
+    if station.isconnected():
+        station.disconnect()
+        while station.isconnected():
+            pass
+    print("WiFi 連線中...")
+    station.active(True)
+    station.connect(SSID, PASSWORD)
+    while not station.isconnected():
+        pass
+    connected_ssid = station.config('essid')
+    print(f"WiFi: {connected_ssid} 已連線")
+    print('Network Config:', station.ifconfig())
+    time.sleep(1)
 
+wifi_connect("Wifi Name", "Wifi PassWord")
 
-wifi_connect("FLAG", "0233110330")
-
-led = Pin(3, Pin.OUT)  # 假設使用 GPIO3
+led = Pin(3, Pin.OUT)  # 選擇與燈泡連接的腳位
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('', 80))
